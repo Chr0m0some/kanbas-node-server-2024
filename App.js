@@ -36,7 +36,7 @@ if (process.env.NODE_ENV !== "development") {
 app.use(session(sessionOptions));
 app.use(express.json());
 UserRoutes(app);
-app.get("/lab5/welcome", (req, res) => res.send("Welcome to the Server"));
+app.get("/", (req, res) => res.send("Welcome to the Server"));
 
 Hello(app);
 Lab5(app);
