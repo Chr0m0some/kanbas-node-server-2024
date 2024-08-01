@@ -6,5 +6,5 @@ export const createCourse = (course) => {
   return model.create(course);
 };
 export const updateCourse = (courseId, course) =>
-  model.updateOne({ _id: courseId }, { $set: course });
-export const deleteCourse = (courseId) => model.deleteOne({ _id: courseId });
+  model.updateOne({ number: courseId }, { $set: course });
+export const deleteCourse = (courseId) => model.deleteOne({ number: courseId });
