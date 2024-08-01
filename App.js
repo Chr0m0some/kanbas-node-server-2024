@@ -21,7 +21,7 @@ app.use(
   })
 );
 const sessionOptions = {
-  secret: "any string",
+  secret: process.env.SESSION_SECRET || "kanbas",
   resave: false,
   saveUninitialized: false,
 };
