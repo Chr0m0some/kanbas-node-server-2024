@@ -1,7 +1,12 @@
 import mongoose from "mongoose";
+const questionSchema = new mongoose.Schema({
+  name: String,
+  description: String,
+  points: Number,
+});
 const quizSchema = new mongoose.Schema(
   {
-    name: String,
+    name: { type: String, default: "New Quiz" },
     description: String,
     type: {
       type: String,
@@ -32,6 +37,8 @@ const quizSchema = new mongoose.Schema(
     due: Date,
     available: Date,
     until: Date,
+    published: { type: Boolean, default: false },
+    questions: [questionSchema],
   },
   { collection: "quizzes" }
 );
