@@ -4,6 +4,7 @@ export default function ModuleRoutes(app) {
     const { cid } = req.params;
     const module = await dao.createModule(req.body);
     module.course = cid;
+    await module.save();
     res.json(module);
   };
   const findModulesByCourse = async (req, res) => {
