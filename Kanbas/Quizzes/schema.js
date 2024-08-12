@@ -1,8 +1,25 @@
 import mongoose from "mongoose";
-const questionSchema = new mongoose.Schema({
-  name: String,
-  description: String,
-  points: Number,
+const baseQuestionSchema = new mongoose.Schema({
+  name: { type: String, default: "New Question" },
+  points: { type: Number, default: 1 },
+  question: String,
+  type: {
+    type: String,
+    enum: ["Multiple Choice", "True/False", "Fill in the Blank"],
+    default: "Multiple Choice",
+  },
+}, { discriminatorKey: 'type' });
+
+const multipleChoiceQuestionSchema = new mongoose.Schema({
+  choices: { type: [String], default: [] },
+  correct: { type: String, default: "" },
+});
+const trueFalseQuestionSchema = new mongoose.Schema({
+  correct: { type: Boolean, default: false },
+});
+const fillInTheBlankQuestionSchema = new mongoose.Schema({
+  choices: { type: [String], default: [] },
+  correct: { type: String, default: "" },
 });
 const quizSchema = new mongoose.Schema(
   {
@@ -38,8 +55,18 @@ const quizSchema = new mongoose.Schema(
     available: Date,
     until: Date,
     published: { type: Boolean, default: false },
-    questions: [questionSchema],
+    questions: [baseQuestionSchema],
   },
   { collection: "quizzes" }
 );
+
+quizSchema
+  .path("questions")
+  .discriminator("Multiple Choice", multipleChoiceQuestionSchema);
+quizSchema
+  .path("questions")
+  .discriminator("True/False", trueFalseQuestionSchema);
+quizSchema
+  .path("questions")
+  .discriminator("Fill in the Blank", fillInTheBlankQuestionSchema);
 export default quizSchema;
